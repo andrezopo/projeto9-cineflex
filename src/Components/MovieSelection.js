@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import InstructionText from "./InstructionText";
 
 export default function MovieSelection() {
   const [movies, setMovies] = useState([]);
@@ -11,18 +12,17 @@ export default function MovieSelection() {
       "https://mock-api.driven.com.br/api/v5/cineflex/movies"
     );
     promise.then((response) => {
-      setMovies(response.data);
-      console.log(movies);
+      setMovies([...response.data]);
     });
-    promise.catch(() => <div>Carregando conteudo...</div>);
+    promise.catch(() => <div>Ops! Tente novamente...</div>);
   }, []);
 
   return (
     <>
-      <div>Selecione o filme</div>
+      <InstructionText instruction={` filme`} />
       <Movies>
         {movies.map((movie, index) => (
-          <Link className="flex" to={`/filme/${movie.id}`}>
+          <Link to={`/filme/${movie.id}`}>
             <img key={index} src={movie.posterURL} alt="" />
           </Link>
         ))}

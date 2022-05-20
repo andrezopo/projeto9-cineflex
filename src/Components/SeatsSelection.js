@@ -1,3 +1,5 @@
+import Footer from "./Footer";
+
 export default function SeatsSelection() {
   return (
     <>
