@@ -22,8 +22,8 @@ export default function MovieSelection() {
       <InstructionText instruction={` filme`} />
       <Movies>
         {movies.map((movie, index) => (
-          <Link to={`/filme/${movie.id}`}>
-            <img key={index} src={movie.posterURL} alt="" />
+          <Link key={index} to={`/filme/${movie.id}`}>
+            <img src={movie.posterURL} alt="" />
           </Link>
         ))}
       </Movies>

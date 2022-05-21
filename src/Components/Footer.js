@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
-export default function Footer({ movieName, showtime, movieImage }) {
+export default function Footer({ movieName, showtime, movieImage, time }) {
   return (
     <Bottom>
       <img src={movieImage} alt="" />
       {showtime ? (
         <>
-          (<div>{movieName}</div>{" "}
-          <div>{`${showtime.weekday} - ${showtime.date}`}</div>)
+          <div>{movieName}</div> <div>{`${showtime.weekday} - ${time}`}</div>
         </>
       ) : (
         <div>{movieName}</div>
