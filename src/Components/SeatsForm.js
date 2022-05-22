@@ -15,7 +15,6 @@ export default function SeatsForm({
   const [cpf, setCpf] = useState("");
   const navigate = useNavigate();
   const numbers = /^[0-9]*$/;
-  console.log(showtime);
 
   function clearSeats() {
     setSeatId([]);

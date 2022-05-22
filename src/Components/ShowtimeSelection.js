@@ -10,7 +10,6 @@ export default function ShowtimeSelection() {
   const { movieId } = useParams();
   const [showtimes, setShowtimes] = useState([]);
   const [movieInfo, setMovieInfo] = useState({});
-  console.log(movieId);
 
   useEffect(() => {
     const promise = axios.get(
@@ -21,7 +20,6 @@ export default function ShowtimeSelection() {
       setMovieInfo(res.data);
     });
   }, []);
-  console.log(movieInfo);
 
   return (
     <>

@@ -7,7 +7,6 @@ export default function SuccessScreen() {
   const { state } = useLocation();
   const [newCpf, setNewCpf] = useState("");
   const navigate = useNavigate();
-  console.log(state);
 
   function clearInfos() {
     navigate("/", { replace: true });
@@ -26,7 +25,6 @@ export default function SuccessScreen() {
       }
     }
     setNewCpf(arr.join(""));
-    console.log(newCpf);
   }
   useEffect(() => {
     cpfPattern();
