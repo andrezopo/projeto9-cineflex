@@ -10,6 +10,8 @@ export default function SeatsSelection() {
   const [showtime, setShowtime] = useState({});
   const [seatId, setSeatId] = useState([]);
   const [color, setColor] = useState("");
+  const [showtimeInfo, setShowtimeInfo] = useState({});
+  const [movieInfo, setMovieInfo] = useState({});
 
   function selectSeat(status, index) {
     if (!seatId.includes(index)) {
@@ -32,10 +34,12 @@ export default function SeatsSelection() {
     promise.then((res) => {
       setShowtime({ ...res.data });
       setSeats([...res.data.seats]);
+      setMovieInfo({ ...res.data.movie });
+      setShowtimeInfo({ ...res.data.day });
     });
   }, []);
-  console.log(showtime.movie);
-  console.log(seats);
+  console.log(showtimeInfo);
+  console.log(movieInfo);
 
   return (
     <>
@@ -63,6 +67,12 @@ export default function SeatsSelection() {
         </StyledSeats>
         <SeatCaption />
       </Container>
+      <Footer
+        movieName={movieInfo.title}
+        showtime={showtimeInfo}
+        movieImage={movieInfo.posterURL}
+        time={showtime.name}
+      />
     </>
   );
 }
@@ -157,10 +167,9 @@ function Footer({ movieName, showtime, movieImage, time }) {
     <Bottom>
       <img src={movieImage} alt="" />
 
-      <>
-        <div>{movieName.title}</div>{" "}
-        <div>{`${showtime.weekday} - ${time}`}</div>
-      </>
+      <div>
+        <div>{movieName}</div> <div>{`${showtime.weekday} - ${time}`}</div>
+      </div>
     </Bottom>
   );
 }
