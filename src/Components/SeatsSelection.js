@@ -8,14 +8,19 @@ export default function SeatsSelection() {
   const { showtimeId } = useParams();
   const [seats, setSeats] = useState([]);
   const [showtime, setShowtime] = useState({});
-  const [selected, setSelected] = useState("");
+  const [seatId, setSeatId] = useState([]);
+  const [color, setColor] = useState("");
 
-  function selectSeat(text, status) {
+  function selectSeat(status, index) {
+    if (!seatId.includes(index)) {
+      setSeatId([...seatId, index]);
+    } else {
+      setSeatId(seatId.filter((elem) => elem !== index));
+    }
+
     if (status !== "false") {
-      if (!selected) {
-        setSelected("selected");
-      } else {
-        setSelected("");
+      if (!color) {
+        setColor("#8DD7CF");
       }
     }
   }
@@ -38,19 +43,46 @@ export default function SeatsSelection() {
       <Container>
         <StyledSeats>
           {seats.map((seat, index) => (
-            <div key={index} onClick={() => selectSeat(seat.isAvailable)}>
-              <Button selected={seat.isAvailable}>{seat.name}</Button>
+            <div
+              key={index}
+              onClick={() => {
+                selectSeat(seat.isAvailable, index);
+              }}
+            >
+              {seatId.includes(index) ? (
+                <Button color={color} selected={seat.isAvailable}>
+                  {seat.name < 10 ? `0${seat.name}` : seat.name}
+                </Button>
+              ) : (
+                <Button color={""} selected={seat.isAvailable}>
+                  {seat.name < 10 ? `0${seat.name}` : seat.name}
+                </Button>
+              )}
             </div>
           ))}
         </StyledSeats>
+        <SeatCaption />
       </Container>
-      <Footer
-        movieName={showtime.movie}
-        showtime={showtime.day}
-        movieImage={showtime.movie}
-        time={showtime.name}
-      />
     </>
+  );
+}
+
+function SeatCaption() {
+  return (
+    <Caption>
+      <div>
+        <Button color={"#8DD7CF"} selected={true}></Button>
+        <div>Selecionado</div>
+      </div>
+      <div>
+        <Button color={"#C3CFD9"} selected={true}></Button>
+        <div>Disponível</div>
+      </div>
+      <div>
+        <Button color={"#FBE192"} selected={true}></Button>
+        <div>Indisponível</div>
+      </div>
+    </Caption>
   );
 }
 
@@ -79,7 +111,45 @@ const Button = styled.button`
   border-radius: 12px;
   margin: 9px 4px;
   margin-top: 0px;
-  background-color: ${(props) => (props.selected ? "#C3CFD9" : "#FBE192")};
+  background-color: ${(props) =>
+    props.selected ? (props.color ? props.color : "#C3CFD9") : "#FBE192"};
+  border: ${(props) =>
+    props.selected
+      ? props.color
+        ? "1px solid #1AAE9E"
+        : "1px solid #7B8B99"
+      : "1px solid #F7C52B"};
+`;
+const Caption = styled.div`
+  margin: 0 auto;
+  display: flex;
+  width: 85%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  color: #4e5a65;
+  margin-top: 16px;
+  margin-bottom: 40px;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  div:nth-child(1) button {
+    border-color: #1aae9e;
+  }
+
+  div:nth-child(2) button {
+    border-color: #7b8b99;
+  }
+
+  div:nth-child(3) button {
+    border-color: #f7c52b;
+  }
 `;
 
 function Footer({ movieName, showtime, movieImage, time }) {
