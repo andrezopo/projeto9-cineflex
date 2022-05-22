@@ -1,6 +1,6 @@
 import styled from "styled-components";
 const Button = styled.button`
-  width: ${(props) => (props.width ? "82px" : "auto")};
+  width: ${(props) => props.width};
   height: 42px;
   background-color: #e8833a;
   color: #ffffff;

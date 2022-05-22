@@ -77,6 +77,7 @@ export default function SeatsSelection() {
           setSeats={setSeatsApi}
           showtime={showtime}
           seatsNumber={seatId}
+          setSeatId={setSeatId}
         />
       </Container>
 

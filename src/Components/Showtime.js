@@ -11,7 +11,7 @@ export default function Showtime({ weekday, date, showtimes }) {
       <div>
         {showtimes.map((showtime, index) => (
           <Link key={index} to={`/sessao/${showtime.id}`}>
-            <Button>{showtime.name}</Button>
+            <Button width={"83px"}>{showtime.name}</Button>
           </Link>
         ))}
       </div>

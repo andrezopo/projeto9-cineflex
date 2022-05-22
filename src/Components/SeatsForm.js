@@ -9,33 +9,44 @@ export default function SeatsForm({
   setSeats,
   showtime,
   seatsNumber,
+  setSeatId,
 }) {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const navigate = useNavigate();
+  const numbers = /^[0-9]*$/;
   console.log(showtime);
+
+  function clearSeats() {
+    setSeatId([]);
+    setSeats([]);
+  }
+
   function getInfos(e) {
     e.preventDefault();
-    const body = {
-      ids: SeatsIds,
-      name,
-      cpf,
-    };
-    const allInfo = {
-      body: body,
-      movieInfo: showtime,
-      seatNumbers: seatsNumber,
-    };
-    const request = axios.post(
-      "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
-      body
-    );
-    request.then((res) => {
-      console.log(res);
-      setCpf("");
-      setName("");
-      navigate("/sucesso", { state: allInfo }, { replace: true });
-    });
+    if (cpf.length === 11 && numbers.test(cpf)) {
+      const body = {
+        ids: SeatsIds,
+        name,
+        cpf,
+      };
+      const allInfo = {
+        body: body,
+        movieInfo: showtime,
+        seatNumbers: seatsNumber,
+      };
+      const request = axios.post(
+        "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
+        body
+      );
+      request.then((res) => {
+        setCpf("");
+        setName("");
+        navigate("/sucesso", { state: allInfo }, { replace: true });
+      });
+    } else {
+      alert("CPF inválido");
+    }
   }
 
   return (
@@ -68,7 +79,9 @@ export default function SeatsForm({
       </div>
 
       <span>
-        <Button type="submit">Reservar assento(s)</Button>
+        <Button width={"225px"} type="submit">
+          Reservar assento(s)
+        </Button>
       </span>
     </StyledForm>
   );
