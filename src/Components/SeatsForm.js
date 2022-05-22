@@ -1,11 +1,19 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./DefaultButton";
 
-export default function SeatsForm({ SeatsIds }) {
+export default function SeatsForm({
+  SeatsIds,
+  setSeats,
+  showtime,
+  seatsNumber,
+}) {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
+  const navigate = useNavigate();
+  console.log(showtime);
   function getInfos(e) {
     e.preventDefault();
     const body = {
@@ -13,17 +21,25 @@ export default function SeatsForm({ SeatsIds }) {
       name,
       cpf,
     };
+    const allInfo = {
+      body: body,
+      movieInfo: showtime,
+      seatNumbers: seatsNumber,
+    };
     const request = axios.post(
       "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
       body
     );
-    request.then((res) => console.log(res));
-    setCpf("");
-    setName("");
+    request.then((res) => {
+      console.log(res);
+      setCpf("");
+      setName("");
+      navigate("/sucesso", { state: allInfo }, { replace: true });
+    });
   }
 
   return (
-    <StyledForm>
+    <StyledForm onSubmit={getInfos}>
       <div>
         <label htmlFor={"name"}>
           <p>{"Nome do comprador: "}</p>
@@ -50,8 +66,9 @@ export default function SeatsForm({ SeatsIds }) {
           required
         />
       </div>
-      <span onClick={getInfos}>
-        <Button>Reservar assento(s)</Button>
+
+      <span>
+        <Button type="submit">Reservar assento(s)</Button>
       </span>
     </StyledForm>
   );

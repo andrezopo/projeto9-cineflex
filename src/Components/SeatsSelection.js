@@ -16,12 +16,16 @@ export default function SeatsSelection() {
   const [seatsApi, setSeatsApi] = useState([]);
 
   function selectSeat(status, index, idApi) {
-    if (!seatId.includes(index)) {
-      setSeatId([...seatId, index]);
-      setSeatsApi([...seatsApi, idApi]);
+    if (status) {
+      if (!seatId.includes(index)) {
+        setSeatId([...seatId, index]);
+        setSeatsApi([...seatsApi, idApi]);
+      } else {
+        setSeatId(seatId.filter((elem) => elem !== index));
+        setSeatsApi(seatsApi.filter((elem) => elem !== idApi));
+      }
     } else {
-      setSeatId(seatId.filter((elem) => elem !== index));
-      setSeatsApi(seatsApi.filter((elem) => elem !== idApi));
+      alert("Esse assento não está disponível");
     }
 
     if (status !== "false") {
@@ -68,7 +72,12 @@ export default function SeatsSelection() {
           ))}
         </StyledSeats>
         <SeatCaption />
-        <SeatsForm SeatsIds={seatsApi} />
+        <SeatsForm
+          SeatsIds={seatsApi}
+          setSeats={setSeatsApi}
+          showtime={showtime}
+          seatsNumber={seatId}
+        />
       </Container>
 
       <Footer
