@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import InstructionText from "./InstructionText";
 import axios from "axios";
+import SeatsForm from "./SeatsForm";
 
 export default function SeatsSelection() {
   const { showtimeId } = useParams();
@@ -44,7 +45,7 @@ export default function SeatsSelection() {
 
   return (
     <>
-      <InstructionText instruction={`(s) seu(s) assentos`} />
+      <InstructionText height={"90px"} instruction={`(s) seu(s) assentos`} />
       <Container>
         <StyledSeats>
           {seats.map((seat, index) => (
@@ -67,7 +68,9 @@ export default function SeatsSelection() {
           ))}
         </StyledSeats>
         <SeatCaption />
+        <SeatsForm SeatsIds={seatsApi} />
       </Container>
+
       <Footer
         movieName={movieInfo.title}
         showtime={showtimeInfo}
@@ -100,6 +103,7 @@ function SeatCaption() {
 const Container = styled.div`
   box-sizing: border-box;
   padding: 24px;
+  padding-top: 0px;
   margin-bottom: 118px;
 `;
 

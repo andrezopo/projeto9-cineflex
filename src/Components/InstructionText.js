@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-export default function InstructionText({ instruction }) {
-  return <Instruction>{`Selecione o${instruction}`}</Instruction>;
+export default function InstructionText({ instruction, height }) {
+  return (
+    <Instruction height={height}>{`Selecione o${instruction}`}</Instruction>
+  );
 }
 
 const Instruction = styled.div`
@@ -9,7 +11,7 @@ const Instruction = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 110px;
+  height: ${(props) => (props.height ? props.height : "110px")};
   font-size: 24px;
   font-weight: 400;
   color: #293845;

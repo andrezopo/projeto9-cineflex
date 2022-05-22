@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+
+import Button from "./DefaultButton";
 
 export default function Showtime({ weekday, date, showtimes }) {
   return (
@@ -17,18 +18,3 @@ export default function Showtime({ weekday, date, showtimes }) {
     </div>
   );
 }
-
-const Button = styled.button`
-  width: 82px;
-  height: 42px;
-  background-color: #e8833a;
-  color: #ffffff;
-  font-size: 18px;
-  line-height: 21px;
-  font-weight: 400;
-  text-align: center;
-  text-justify: center;
-  border-radius: 3px;
-  border-width: 0px;
-  margin: 24px 4px;
-`;
