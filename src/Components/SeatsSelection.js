@@ -12,12 +12,15 @@ export default function SeatsSelection() {
   const [color, setColor] = useState("");
   const [showtimeInfo, setShowtimeInfo] = useState({});
   const [movieInfo, setMovieInfo] = useState({});
+  const [seatsApi, setSeatsApi] = useState([]);
 
-  function selectSeat(status, index) {
+  function selectSeat(status, index, idApi) {
     if (!seatId.includes(index)) {
       setSeatId([...seatId, index]);
+      setSeatsApi([...seatsApi, idApi]);
     } else {
       setSeatId(seatId.filter((elem) => elem !== index));
+      setSeatsApi(seatsApi.filter((elem) => elem !== idApi));
     }
 
     if (status !== "false") {
@@ -38,8 +41,6 @@ export default function SeatsSelection() {
       setShowtimeInfo({ ...res.data.day });
     });
   }, []);
-  console.log(showtimeInfo);
-  console.log(movieInfo);
 
   return (
     <>
@@ -50,7 +51,7 @@ export default function SeatsSelection() {
             <div
               key={index}
               onClick={() => {
-                selectSeat(seat.isAvailable, index);
+                selectSeat(seat.isAvailable, index, seat.id);
               }}
             >
               {seatId.includes(index) ? (
